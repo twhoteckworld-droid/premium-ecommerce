@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NovaStore | Premium Shopping</title>
+
+    <meta name="description" content="Discover premium products at NovaStore. Shop online with secure checkout.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement">
+    Free Shipping on Orders Above ₹999
+</div>
+
+<!-- Header -->
+<header class="header">
+
+    <div class="header-top">
+
+        <a href="#" class="logo">NOVA<span>STORE.</span></a>
+
+        <div class="search-box">
+            <input type="search" id="searchInput"
+                placeholder="Search products...">
+            <button id="searchBtn">⌕</button>
+        </div>
+
+        <div class="header-actions">
+            <button id="cartBtn" class="icon-btn">
+                🛒 <span id="cartCount">0</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+        <a href="#home">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#featured">Featured</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+</header>
+
+
+<!-- Hero Section -->
+<main>
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <span class="eyebrow">THE NEW COLLECTION 2026</span>
+
+        <h1>Shopping Made<br>
+            <span>Extraordinary.</span>
+        </h1>
+
+        <p>
+            Discover premium products, exceptional quality
+            and a better shopping experience.
+        </p>
+
+        <a href="#products" class="primary-btn">
+            Explore Collection →
+        </a>
+
+    </div>
+
+    <div class="hero-visual">
+        <div class="hero-card">
+            <span>PREMIUM</span>
+            <h2>NEW<br>ARRIVALS</h2>
+            <p>Discover something special.</p>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- Benefits -->
+<section class="benefits">
+
+    <div class="benefit">
+        <span>🚚</span>
+        <div>
+            <h3>Free Shipping</h3>
+            <p>On selected orders</p>
+        </div>
+    </div>
+
+    <div class="benefit">
+        <span>🔒</span>
+        <div>
+            <h3>Secure Payments</h3>
+            <p>Protected checkout</p>
+        </div>
+    </div>
+
+    <div class="benefit">
+        <span>↩️</span>
+        <div>
+            <h3>Easy Returns</h3>
+            <p>Clear return policy</p>
+        </div>
+    </div>
+
+    <div class="benefit">
+        <span>💬</span>
+        <div>
+            <h3>Customer Support</h3>
+            <p>We're here to help</p>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- Categories -->
+<section class="section" id="categories">
+
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">EXPLORE</span>
+            <h2>Shop by Category</h2>
+        </div>
+    </div>
+
+    <div class="category-list">
+
+        <button class="category-item" data-category="electronics">
+            <span>🎧</span>
+            Electronics
+        </button>
+
+        <button class="category-item" data-category="fashion">
+            <span>👕</span>
+            Fashion
+        </button>
+
+        <button class="category-item" data-category="accessories">
+            <span>⌚</span>
+            Accessories
+        </button>
+
+        <button class="category-item" data-category="lifestyle">
+            <span>🏠</span>
+            Lifestyle
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- Featured Products -->
+<section class="section" id="featured">
+
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">HANDPICKED FOR YOU</span>
+            <h2>Featured Products</h2>
+        </div>
+
+        <a href="#products" class="view-all">View All →</a>
+    </div>
+
+    <div class="product-slider" id="featuredProducts">
+
+        <p class="loading">Loading featured products...</p>
+
+    </div>
+
+</section>
+
+
+<!-- All Products -->
+<section class="section" id="products">
+
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">OUR COLLECTION</span>
+            <h2>Discover Products</h2>
+        </div>
+    </div>
+
+    <div class="product-grid" id="productGrid">
+
+        <p class="loading">Loading products...</p>
+
+    </div>
+
+</section>
+
+
+<!-- About -->
+<section class="about-section" id="about">
+
+    <span class="eyebrow">WHY NOVASTORE</span>
+
+    <h2>A Better Way to Shop.</h2>
+
+    <p>
+        We believe shopping should be simple, secure
+        and enjoyable. Discover carefully selected
+        products with transparent pricing and a
+        reliable checkout experience.
+    </p>
+
+</section>
+
+
+<!-- Newsletter -->
+<section class="newsletter">
+
+    <h2>Stay in the Loop</h2>
+
+    <p>Get updates about new arrivals and special offers.</p>
+
+    <form id="newsletterForm">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+    </form>
+
+</section>
+
+</main>
+
+
+<!-- Cart Drawer -->
+<div class="cart-overlay" id="cartOverlay">
+
+    <div class="cart-drawer">
+
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button id="closeCart">✕</button>
+        </div>
+
+        <div id="cartItems" class="cart-items">
+            <p>Your cart is empty.</p>
+        </div>
+
+        <div class="cart-footer">
+
+            <div class="cart-total">
+                <span>Total</span>
+                <strong id="cartTotal">₹0</strong>
+            </div>
+
+            <button id="checkoutBtn" class="primary-btn">
+                Proceed to Checkout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Checkout Modal -->
+<div class="checkout-overlay" id="checkoutOverlay">
+    <div class="checkout-box">
+        <div class="checkout-header">
+            <h2>Secure Checkout</h2>
+            <button type="button" id="closeCheckout">✕</button>
+        </div>
+
+        <form id="checkoutForm">
+            <h3>Delivery Information</h3>
+
+            <label>Full Name</label>
+            <input type="text" id="customerName" required maxlength="80">
+
+            <label>Mobile Number</label>
+            <input type="tel" id="customerPhone" required
+                   pattern="[6-9][0-9]{9}" maxlength="10">
+
+            <label>Full Address</label>
+            <textarea id="customerAddress" required maxlength="300"></textarea>
+
+            <label>City</label>
+            <input type="text" id="customerCity" required maxlength="60">
+
+            <label>PIN Code</label>
+            <input type="text" id="customerPincode" required
+                   pattern="[1-9][0-9]{5}" maxlength="6">
+
+            <div class="checkout-summary">
+                <h3>Order Summary</h3>
+                <div id="checkoutItems"></div>
+                <p>Total: <strong id="checkoutTotal">₹0</strong></p>
+            </div>
+
+            <button type="submit" class="primary-btn" id="placeOrderBtn">
+                Continue to Payment
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer id="contact">
+
+    <div class="footer-content">
+
+        <div>
+            <a href="#" class="logo">NOVA<span>STORE.</span></a>
+            <p>Your destination for premium online shopping.</p>
+        </div>
+
+        <div>
+            <h3>Quick Links</h3>
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#about">About Us</a>
+        </div>
+
+        <div>
+            <h3>Customer Support</h3>
+            <a href="#">Shipping Policy</a>
+            <a href="#">Return Policy</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        © 2026 NovaStore. All rights reserved.
+    </div>
+
+</footer>
+
+
+
+<!-- Pay Now Modal (Payment Options) -->
+<div class="checkout-overlay" id="paymentOverlay">
+    <div class="checkout-box" style="text-align: center; max-width: 400px;">
+        <div class="checkout-header">
+            <h2>Complete Payment</h2>
+            <button type="button" id="closePayment">✕</button>
+        </div>
+        
+        <div style="padding: 20px 0;">
+            <h3 style="color: var(--navy); margin-bottom: 10px;">Order <span id="payOrderNumber"></span></h3>
+            <p style="color: var(--muted); font-size: 14px;">Total Amount to Pay</p>
+            <h1 style="color: var(--blue); font-size: 32px; margin: 10px 0 30px;" id="payAmount">₹0</h1>
+            
+            <button class="primary-btn" id="btnPayMock" style="width: 100%; margin-bottom: 10px;">
+                💳 Pay Now (Simulate)
+            </button>
+            <p style="font-size: 11px; color: #888;">Payment gateway is in TEST mode.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<!-- Order Success Modal -->
+<div class="order-success-overlay" id="orderSuccessOverlay">
+    <div class="order-success-box">
+        <div class="success-icon">✓</div>
+        <h2>Order Placed Successfully!</h2>
+        <p class="success-subtitle">Thank you for shopping with NovaStore</p>
+
+        <div class="success-details">
+            <div class="success-row">
+                <span>Order Number</span>
+                <strong id="successOrderNumber">—</strong>
+            </div>
+            <div class="success-row">
+                <span>Total Amount</span>
+                <strong id="successOrderTotal">—</strong>
+            </div>
+            <div class="success-row">
+                <span>Status</span>
+                <strong id="successOrderStatus">—</strong>
+            </div>
+        </div>
+
+        <p class="success-note">
+            Save your order number for tracking. We'll confirm your order soon.
+        </p>
+
+        <button class="primary-btn" id="closeSuccessBtn" style="width:100%;">
+            Continue Shopping
+        </button>
+    </div>
+</div>
+<script src="js/app.js"></script>
+
+</body>
+</html>

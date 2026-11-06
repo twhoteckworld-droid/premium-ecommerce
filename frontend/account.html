@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | NovaStore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .account-page { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .account-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+        .account-header h1 { font-size: 26px; color: var(--navy); }
+        .logout-btn { background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; }
+        .profile-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(7, 26, 53, 0.05); }
+        .profile-card h2 { font-size: 18px; color: var(--navy); margin-bottom: 16px; }
+        .profile-row { display: flex; padding: 8px 0; border-bottom: 1px solid #f0f3f8; font-size: 14px; }
+        .profile-row:last-child { border-bottom: none; }
+        .profile-row span:first-child { width: 120px; color: var(--muted); font-weight: 600; }
+        .orders-section h2 { font-size: 20px; color: var(--navy); margin-bottom: 16px; }
+        .order-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(7, 26, 53, 0.03); }
+        .order-header { display: flex; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+        .order-number { font-family: monospace; font-weight: 700; color: var(--blue); font-size: 13px; }
+        .order-status { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+        .status-paid { background: #d1fae5; color: #059669; }
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-cancelled { background: #fee2e2; color: #dc2626; }
+        .order-items { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+        .order-total { display: flex; justify-content: space-between; font-weight: 700; color: var(--navy); border-top: 1px dashed #e8edf4; padding-top: 10px; margin-top: 10px; }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+        .empty-state a { color: var(--blue); font-weight: 600; }
+        .loading { text-align: center; padding: 40px; color: var(--muted); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <a href="/" class="logo">NOVA<span>STORE.</span></a>
+            <div class="header-actions">
+                <a href="/" style="color: var(--navy); font-weight: 600; font-size: 13px;">← Back to Shop</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="account-page">
+        <div class="account-header">
+            <h1>My Account</h1>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+
+        <div class="profile-card">
+            <h2>Profile</h2>
+            <div id="profileContent" class="loading">Loading...</div>
+        </div>
+
+        <div class="orders-section">
+            <h2>My Orders</h2>
+            <div id="ordersContent" class="loading">Loading orders...</div>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('novaCustomerToken');
+        const user = JSON.parse(localStorage.getItem('novaCustomerUser') || 'null');
+
+        if (!token || !user) {
+            window.location.href = '/login.html';
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('novaCustomerToken');
+            localStorage.removeItem('novaCustomerUser');
+            window.location.href = '/';
+        });
+
+        // Load profile
+        async function loadProfile() {
+            try {
+                const res = await fetch('/api/auth/me', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message);
+
+                const u = data.user;
+                document.getElementById('profileContent').innerHTML = `
+                    <div class="profile-row"><span>Name</span><span>${u.name}</span></div>
+                    <div class="profile-row"><span>Email</span><span>${u.email}</span></div>
+                    <div class="profile-row"><span>Phone</span><span>${u.phone}</span></div>
+                `;
+            } catch (err) {
+                document.getElementById('profileContent').innerHTML = `<p style="color:#dc2626;">${err.message}</p>`;
+            }
+        }
+
+        // Load orders
+        async function loadOrders() {
+            try {
+                const res = await fetch('/api/auth/my-orders', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message);
+
+                const orders = data.orders;
+                const container = document.getElementById('ordersContent');
+
+                if (!orders.length) {
+                    container.innerHTML = '<div class="empty-state"><p>No orders yet.</p><p style="margin-top:12px;"><a href="/">Start shopping →</a></p></div>';
+                    return;
+                }
+
+                container.innerHTML = orders.map(o => {
+                    const statusClass = o.paymentStatus === 'Paid' ? 'status-paid' : (o.orderStatus === 'Cancelled' ? 'status-cancelled' : 'status-pending');
+                    const itemsCount = o.items ? o.items.length : 0;
+                    const date = new Date(o.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+                    return `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <span class="order-number">${o.orderNumber}</span>
+                                <span class="order-status ${statusClass}">${o.paymentStatus === 'Paid' ? 'PAID' : o.orderStatus.toUpperCase()}</span>
+                            </div>
+                            <div class="order-items">${itemsCount} item(s) • ${date}</div>
+                            <div class="order-total">
+                                <span>Total</span>
+                                <span>₹${Number(o.total).toLocaleString('en-IN')}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (err) {
+                document.getElementById('ordersContent').innerHTML = `<p style="color:#dc2626;">${err.message}</p>`;
+            }
+        }
+
+        loadProfile();
+        loadOrders();
+    </script>
+</body>
+</html>

@@ -11,6 +11,7 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const settingRoutes = require('./routes/settingRoutes');
+const customerAuthRoutes = require('./routes/customerAuthRoutes');
 
 // Admin routes
 const adminAuthRoutes = require('./routes/adminAuthRoutes');
@@ -45,6 +46,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/settings', settingRoutes);
+app.use('/api/auth', customerAuthRoutes);
 
 // ============ ADMIN API ============
 app.use('/api/admin/auth', adminAuthRoutes);

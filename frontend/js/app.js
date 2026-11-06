@@ -440,3 +440,111 @@ document.getElementById('newsletterForm').addEventListener('submit', event => {
 // ===================== INIT =====================
 updateCart();
 fetchProducts();
+
+// ===================== PAYMENT INTEGRATION =====================
+
+let currentPaymentOrder = null;
+
+function setupPaymentFlow(orderData) {
+    currentPaymentOrder = orderData;
+    const successBtn = document.getElementById('closeSuccessBtn');
+    successBtn.textContent = 'Pay Now →';
+    successBtn.style.background = '#10b981'; 
+    
+    successBtn.replaceWith(successBtn.cloneNode(true));
+    
+    document.getElementById('closeSuccessBtn').addEventListener('click', () => {
+        document.getElementById('orderSuccessOverlay').classList.remove('active');
+        openPaymentModal(orderData);
+    });
+}
+
+function openPaymentModal(orderData) {
+    document.getElementById('payOrderNumber').textContent = orderData.orderNumber;
+    document.getElementById('payAmount').textContent = formatPrice(orderData.total);
+    document.getElementById('paymentOverlay').classList.add('active');
+}
+
+document.getElementById('btnPayMock')?.addEventListener('click', async () => {
+    if (!currentPaymentOrder) return;
+    
+    const btn = document.getElementById('btnPayMock');
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+
+    try {
+        const resOrder = await fetch(`${API_URL}/payments/create-order`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ orderId: currentPaymentOrder.id })
+        });
+        const dataOrder = await resOrder.json();
+        
+        if (!dataOrder.success) throw new Error(dataOrder.message);
+
+        const mockPaymentId = 'pay_MOCK_' + Date.now();
+        const mockSignature = 'MOCK_SIG_' + Date.now();
+
+        const resVerify = await fetch(`${API_URL}/payments/verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                razorpayOrderId: dataOrder.payment.razorpayOrderId,
+                razorpayPaymentId: mockPaymentId,
+                razorpaySignature: mockSignature
+            })
+        });
+        const dataVerify = await resVerify.json();
+
+        if (!dataVerify.success) throw new Error(dataVerify.message);
+
+        document.getElementById('paymentOverlay').classList.remove('active');
+        showToast('✅ Payment Successful! Order Confirmed.');
+        
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = '💳 Pay Now (Simulate)';
+            const succBtn = document.getElementById('closeSuccessBtn');
+            succBtn.textContent = 'Continue Shopping';
+            succBtn.style.background = 'var(--blue)';
+            succBtn.onclick = () => { document.getElementById('orderSuccessOverlay').classList.remove('active'); };
+        }, 3000);
+
+    } catch (err) {
+        showToast('❌ Payment Failed: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = '💳 Pay Now (Simulate)';
+    }
+});
+
+document.getElementById('closePayment')?.addEventListener('click', () => {
+    document.getElementById('paymentOverlay').classList.remove('active');
+});
+
+// ===================== CUSTOMER AUTH DETECTION =====================
+
+(function() {
+    const customerToken = localStorage.getItem('novaCustomerToken');
+    const customerUser = JSON.parse(localStorage.getItem('novaCustomerUser') || 'null');
+    const accountBtn = document.getElementById('accountBtn');
+
+    if (customerToken && customerUser) {
+        if (accountBtn) {
+            accountBtn.innerHTML = '👤 ' + customerUser.name.split(' ')[0];
+            accountBtn.href = '/account.html';
+        }
+    }
+
+    // Auto-fill checkout if logged in
+    if (customerUser) {
+        const fillCheckout = () => {
+            const nameEl = document.getElementById('customerName');
+            const phoneEl = document.getElementById('customerPhone');
+            if (nameEl && !nameEl.value) nameEl.value = customerUser.name || '';
+            if (phoneEl && !phoneEl.value) phoneEl.value = customerUser.phone || '';
+        };
+        // Fill when checkout opens
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn) checkoutBtn.addEventListener('click', () => setTimeout(fillCheckout, 100));
+    }
+})();
