@@ -958,3 +958,109 @@ padding: 14px;
     100% { transform: scale(1); }
 }
 
+
+/* ============================================
+   ORDER SUCCESS MODAL
+   ============================================ */
+.order-success-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(5, 15, 35, .85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.order-success-overlay.active {
+    display: flex;
+}
+
+.order-success-box {
+    width: 100%;
+    max-width: 440px;
+    background: #fff;
+    border-radius: 18px;
+    padding: 32px 26px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .35);
+    animation: successPop .35s ease;
+}
+
+@keyframes successPop {
+    0% { transform: scale(.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.success-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, .4);
+}
+
+.order-success-box h2 {
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 8px;
+    letter-spacing: -.5px;
+}
+
+.success-subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+.success-details {
+    background: #f3f6fb;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.success-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed #d6dfeb;
+    font-size: 13px;
+}
+
+.success-row:last-child {
+    border-bottom: none;
+}
+
+.success-row span {
+    color: var(--muted);
+}
+
+.success-row strong {
+    color: var(--navy);
+    font-size: 14px;
+}
+
+#successOrderNumber {
+    font-family: 'Courier New', monospace;
+    letter-spacing: .5px;
+    color: var(--blue) !important;
+}
+
+.success-note {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}

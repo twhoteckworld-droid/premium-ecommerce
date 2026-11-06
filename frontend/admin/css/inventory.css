@@ -1,0 +1,90 @@
+/* INVENTORY VIEW */
+
+.inv-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.inv-stat-card {
+    background: var(--navy);
+    border: 1px solid var(--navy-light);
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+.inv-stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.inv-stat-value {
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.inv-stat-card.green .inv-stat-value { color: #10b981; }
+.inv-stat-card.amber .inv-stat-value { color: #f59e0b; }
+.inv-stat-card.red .inv-stat-value { color: #ef4444; }
+
+.stock-display {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.stock-display.ok { color: #10b981; }
+.stock-display.low { color: #f59e0b; }
+.stock-display.out { color: #ef4444; }
+
+.history-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--navy);
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.history-left strong {
+    display: block;
+    color: var(--white);
+    font-size: 13px;
+}
+
+.history-left span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.history-change {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.history-change.positive { color: #10b981; }
+.history-change.negative { color: #ef4444; }
+
+.history-stock {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.history-reason {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(45, 140, 255, 0.15);
+    color: var(--blue-bright);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: capitalize;
+}

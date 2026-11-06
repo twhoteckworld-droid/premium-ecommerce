@@ -352,6 +352,37 @@
 <!-- Toast -->
 <div id="toast" class="toast"></div>
 
+<!-- Order Success Modal -->
+<div class="order-success-overlay" id="orderSuccessOverlay">
+    <div class="order-success-box">
+        <div class="success-icon">✓</div>
+        <h2>Order Placed Successfully!</h2>
+        <p class="success-subtitle">Thank you for shopping with NovaStore</p>
+
+        <div class="success-details">
+            <div class="success-row">
+                <span>Order Number</span>
+                <strong id="successOrderNumber">—</strong>
+            </div>
+            <div class="success-row">
+                <span>Total Amount</span>
+                <strong id="successOrderTotal">—</strong>
+            </div>
+            <div class="success-row">
+                <span>Status</span>
+                <strong id="successOrderStatus">—</strong>
+            </div>
+        </div>
+
+        <p class="success-note">
+            Save your order number for tracking. We'll confirm your order soon.
+        </p>
+
+        <button class="primary-btn" id="closeSuccessBtn" style="width:100%;">
+            Continue Shopping
+        </button>
+    </div>
+</div>
 <script src="js/app.js"></script>
 
 </body>

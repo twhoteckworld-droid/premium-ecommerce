@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | NovaStore Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">NOVA<span>STORE</span></div>
+                <button class="sidebar-close-btn" id="sidebarClose">✕</button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <a class="nav-item active" data-view="dashboard" href="#dashboard">
+                        <span class="nav-icon">▦</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Catalog</div>
+                    <a class="nav-item" data-view="products" href="#products">
+                        <span class="nav-icon">📦</span>
+                        <span>Products</span>
+                    </a>
+                    <a class="nav-item" data-view="categories" href="#categories">
+                        <span class="nav-icon">🗂️</span>
+                        <span>Categories</span>
+                    </a>
+                    <a class="nav-item" data-view="inventory" href="#inventory">
+                        <span class="nav-icon">📊</span>
+                        <span>Inventory</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Sales</div>
+                    <a class="nav-item" data-view="orders" href="#orders">
+                        <span class="nav-icon">🧾</span>
+                        <span>Orders</span>
+                    </a>
+                    <a class="nav-item" data-view="payments" href="#payments">
+                        <span class="nav-icon">💳</span>
+                        <span>Payments</span>
+                    </a>
+                    <a class="nav-item" data-view="customers" href="#customers">
+                        <span class="nav-icon">👥</span>
+                        <span>Customers</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Marketing</div>
+                    <a class="nav-item" data-view="coupons" href="#coupons">
+                        <span class="nav-icon">🏷️</span>
+                        <span>Coupons</span>
+                    </a>
+                    <a class="nav-item" data-view="reviews" href="#reviews">
+                        <span class="nav-icon">⭐</span>
+                        <span>Reviews</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Store</div>
+                    <a class="nav-item" data-view="settings" href="#settings">
+                        <span class="nav-icon">⚙️</span>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <div class="admin-main">
+            <header class="admin-topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="menuToggle">☰</button>
+                    <div class="page-title" id="pageTitle">Dashboard</div>
+                </div>
+
+                <div class="topbar-right">
+                    <button class="topbar-btn" title="Notifications">🔔</button>
+                    <div class="admin-profile" title="Logged in">
+                        <div class="profile-avatar" id="adminAvatar">AD</div>
+                        <div class="profile-name" id="adminName">Admin</div>
+                    </div>
+                    <button class="topbar-btn" id="logoutBtn" title="Logout" style="color:#ef4444;border-color:rgba(239,68,68,0.3);">⏻</button>
+                </div>
+            </header>
+
+            <main class="admin-content">
+
+                <!-- DASHBOARD VIEW -->
+                <div class="view active" id="view-dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:rgba(45,140,255,0.15);color:#2d8cff;">₹</div>
+                            <div class="stat-info">
+                                <div class="stat-label">Total Revenue</div>
+                                <div class="stat-value" id="statRevenue">₹0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:rgba(16,185,129,0.15);color:#10b981;">🧾</div>
+                            <div class="stat-info">
+                                <div class="stat-label">Total Orders</div>
+                                <div class="stat-value" id="statOrders">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;">📦</div>
+                            <div class="stat-info">
+                                <div class="stat-label">Products</div>
+                                <div class="stat-value" id="statProducts">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:rgba(168,85,247,0.15);color:#a855f7;">👥</div>
+                            <div class="stat-info">
+                                <div class="stat-label">Customers</div>
+                                <div class="stat-value" id="statCustomers">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:rgba(239,68,68,0.15);color:#ef4444;">⏳</div>
+                            <div class="stat-info">
+                                <div class="stat-label">Pending Orders</div>
+                                <div class="stat-value" id="statPending">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:rgba(16,185,129,0.15);color:#10b981;">✅</div>
+                            <div class="stat-info">
+                                <div class="stat-label">Delivered</div>
+                                <div class="stat-value" id="statDelivered">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:rgba(107,114,128,0.15);color:#9ca3af;">✕</div>
+                            <div class="stat-info">
+                                <div class="stat-label">Cancelled</div>
+                                <div class="stat-value" id="statCancelled">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;">⚠️</div>
+                            <div class="stat-info">
+                                <div class="stat-label">Low Stock</div>
+                                <div class="stat-value" id="statLowStock">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <div class="chart-header"><h3>Daily Sales (Last 7 Days)</h3></div>
+                            <div class="chart-body"><canvas id="dailyChart"></canvas></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header"><h3>Order Status Distribution</h3></div>
+                            <div class="chart-body"><canvas id="statusChart"></canvas></div>
+                        </div>
+                    </div>
+
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <div class="chart-header"><h3>Monthly Revenue (Last 12 Months)</h3></div>
+                            <div class="chart-body"><canvas id="monthlyChart"></canvas></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header"><h3>Top 5 Products</h3></div>
+                            <div class="chart-body"><canvas id="topProductsChart"></canvas></div>
+                        </div>
+                    </div>
+
+                    <div class="recent-row">
+                        <div class="recent-card">
+                            <div class="chart-header"><h3>Recent Orders</h3></div>
+                            <div class="recent-list" id="recentOrders"><p class="loading-text">Loading...</p></div>
+                        </div>
+                        <div class="recent-card">
+                            <div class="chart-header"><h3>Recent Customers</h3></div>
+                            <div class="recent-list" id="recentCustomers"><p class="loading-text">Loading...</p></div>
+                        </div>
+                        <div class="recent-card">
+                            <div class="chart-header"><h3>Low Stock Alerts</h3></div>
+                            <div class="recent-list" id="recentLowStock"><p class="loading-text">Loading...</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRODUCTS VIEW -->
+                <div class="view" id="view-products">
+                    <div style="background:var(--navy);border:1px solid var(--navy-light);border-radius:12px;padding:40px;text-align:center;">
+                        <h2 style="color:var(--white);font-size:24px;margin-bottom:10px;">Products Management</h2>
+                        <p style="color:var(--muted);font-size:14px;">Coming in Phase 3E.</p>
+                    </div>
+                </div>
+
+                <!-- CATEGORIES VIEW -->
+                <div class="view" id="view-categories">
+                    <div style="background:var(--navy);border:1px solid var(--navy-light);border-radius:12px;padding:40px;text-align:center;">
+                        <h2 style="color:var(--white);font-size:24px;margin-bottom:10px;">Categories</h2>
+                        <p style="color:var(--muted);font-size:14px;">Coming in Phase 3F.</p>
+                    </div>
+                </div>
+
+                <!-- ORDERS VIEW -->
+                <div class="view" id="view-orders">
+                    <div style="background:var(--navy);border:1px solid var(--navy-light);border-radius:12px;padding:40px;text-align:center;">
+                        <h2 style="color:var(--white);font-size:24px;margin-bottom:10px;">Orders</h2>
+                        <p style="color:var(--muted);font-size:14px;">Coming in Phase 3G.</p>
+                    </div>
+                </div>
+
+                <!-- CUSTOMERS VIEW -->
+                <div class="view" id="view-customers">
+                    <div style="background:var(--navy);border:1px solid var(--navy-light);border-radius:12px;padding:40px;text-align:center;">
+                        <h2 style="color:var(--white);font-size:24px;margin-bottom:10px;">Customers</h2>
+                        <p style="color:var(--muted);font-size:14px;">Coming in Phase 3H.</p>
+                    </div>
+                </div>
+
+                <!-- PAYMENTS VIEW -->
+                <div class="view" id="view-payments">
+                    <div style="background:var(--navy);border:1px solid var(--navy-light);border-radius:12px;padding:40px;text-align:center;">
+                        <h2 style="color:var(--white);font-size:24px;margin-bottom:10px;">Payments</h2>
+                        <p style="color:var(--muted);font-size:14px;">Coming in Phase 3I.</p>
+                    </div>
+                </div>
+
+                <!-- COUPONS VIEW -->
+                <div class="view" id="view-coupons">
+                    <div style="background:var(--navy);border:1px solid var(--navy-light);border-radius:12px;padding:40px;text-align:center;">
+                        <h2 style="color:var(--white);font-size:24px;margin-bottom:10px;">Coupons</h2>
+                        <p style="color:var(--muted);font-size:14px;">Coming in Phase 3J.</p>
+                    </div>
+                </div>
+
+                <!-- INVENTORY VIEW -->
+                <div class="view" id="view-inventory">
+                    <div style="background:var(--navy);border:1px solid var(--navy-light);border-radius:12px;padding:40px;text-align:center;">
+                        <h2 style="color:var(--white);font-size:24px;margin-bottom:10px;">Inventory</h2>
+                        <p style="color:var(--muted);font-size:14px;">Coming in Phase 3K.</p>
+                    </div>
+                </div>
+
+                <!-- REVIEWS VIEW -->
+                <div class="view" id="view-reviews">
+                    <div style="background:var(--navy);border:1px solid var(--navy-light);border-radius:12px;padding:40px;text-align:center;">
+                        <h2 style="color:var(--white);font-size:24px;margin-bottom:10px;">Reviews</h2>
+                        <p style="color:var(--muted);font-size:14px;">Coming in Phase 3L.</p>
+                    </div>
+                </div>
+
+                <!-- SETTINGS VIEW -->
+                <div class="view" id="view-settings">
+                    <div style="background:var(--navy);border:1px solid var(--navy-light);border-radius:12px;padding:40px;text-align:center;">
+                        <h2 style="color:var(--white);font-size:24px;margin-bottom:10px;">Settings</h2>
+                        <p style="color:var(--muted);font-size:14px;">Coming in Phase 3N.</p>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="/admin/js/auth.js"></script>
+    <script src="/admin/js/app.js"></script>
+    <script src="/admin/js/views/dashboard.js"></script>
+</body>
+</html>

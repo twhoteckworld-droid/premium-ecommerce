@@ -1,0 +1,52 @@
+/* ============================================
+   COUPONS VIEW
+   ============================================ */
+
+.coupon-code {
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(45, 140, 255, 0.12);
+    color: var(--blue-bright);
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: 1px dashed rgba(45, 140, 255, 0.4);
+}
+
+.coupon-desc {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.coupon-usage {
+    font-size: 13px;
+}
+
+.coupon-usage strong {
+    color: var(--white);
+}
+
+.coupon-usage span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.coupon-expiry {
+    font-size: 12px;
+}
+
+.coupon-expiry.expired {
+    color: #ef4444;
+}
+
+.coupon-expiry.expiring {
+    color: #f59e0b;
+}

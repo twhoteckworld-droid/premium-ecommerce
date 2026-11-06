@@ -1,0 +1,148 @@
+const mongoose = require('mongoose');
+const Order = require('../models/Order');
+const Product = require('../models/Product');
+
+exports.createOrder = async (req, res) => {
+    const reserved = [];
+
+    try {
+        const { customerDetails, items } = req.body;
+
+        if (!customerDetails || !Array.isArray(items) ||
+            items.length === 0 || items.length > 20) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid order details'
+            });
+        }
+
+        const { name, phone, address, city, pincode, email } = customerDetails;
+
+        if (
+            typeof name !== 'string' || !name.trim() || name.length > 80 ||
+            typeof phone !== 'string' || !/^[6-9]\d{9}$/.test(phone) ||
+            typeof address !== 'string' || !address.trim() || address.length > 300 ||
+            typeof city !== 'string' || !city.trim() || city.length > 60 ||
+            typeof pincode !== 'string' || !/^[1-9]\d{5}$/.test(pincode) ||
+            (email && (typeof email !== 'string' || email.length > 120))
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide valid customer details'
+            });
+        }
+
+        const quantities = new Map();
+
+        for (const item of items) {
+            if (
+                !item.productId ||
+                !mongoose.isValidObjectId(item.productId) ||
+                !Number.isInteger(item.quantity) ||
+                item.quantity < 1 || item.quantity > 10
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Invalid product or quantity'
+                });
+            }
+
+            const id = item.productId.toString();
+            quantities.set(id, (quantities.get(id) || 0) + item.quantity);
+        }
+
+        const orderItems = [];
+        let subtotal = 0;
+
+        for (const [productId, quantity] of quantities) {
+            const product = await Product.findOneAndUpdate(
+                {
+                    _id: productId,
+                    status: 'active',
+                    stock: { $gte: quantity }
+                },
+                { $inc: { stock: -quantity } },
+                { new: true }
+            );
+
+            if (!product) {
+                throw new Error('PRODUCT_UNAVAILABLE');
+            }
+
+            reserved.push({ productId, quantity });
+
+            orderItems.push({
+                product: product._id,
+                name: product.name,
+                quantity,
+                price: product.salePrice
+            });
+
+            subtotal += product.salePrice * quantity;
+        }
+
+        const shipping = 0;
+        const discount = 0;
+
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const d = String(now.getDate()).padStart(2, '0');
+        const rand = Math.random().toString(36).substring(2, 8).toUpperCase().padEnd(6, 'X');
+        const orderNumber = `NOVA-${y}${m}${d}-${rand}`;
+
+        const order = await Order.create({
+            orderNumber,
+            customerDetails: {
+                name: name.trim(),
+                phone,
+                email: email ? email.trim() : undefined,
+                address: address.trim(),
+                city: city.trim(),
+                pincode
+            },
+            items: orderItems,
+            subtotal,
+            discount,
+            shipping,
+            total: subtotal - discount + shipping,
+            paymentStatus: 'Pending',
+            orderStatus: 'Payment Pending'
+        });
+
+        res.status(201).json({
+            success: true,
+            message: 'Order created successfully',
+            order: {
+                id: order._id,
+                orderNumber: order.orderNumber,
+                orderNumber: order.orderNumber,
+                total: order.total,
+                paymentStatus: order.paymentStatus,
+                orderStatus: order.orderStatus
+            }
+        });
+
+    } catch (error) {
+        for (const item of reserved) {
+            await Product.updateOne(
+                { _id: item.productId },
+                { $inc: { stock: item.quantity } }
+            );
+        }
+
+        if (error.message === 'PRODUCT_UNAVAILABLE') {
+            return res.status(409).json({
+                success: false,
+                message: 'A product is unavailable or has insufficient stock'
+            });
+        }
+
+        console.error('Create order error:', error);
+
+        res.status(500).json({
+            success: false,
+            message: 'Unable to create order'
+        });
+    }
+};

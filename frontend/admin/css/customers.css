@@ -1,0 +1,138 @@
+/* ============================================
+   CUSTOMERS VIEW
+   ============================================ */
+
+.customer-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 200px;
+}
+
+.customer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #1769e0, #2d8cff);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.customer-info-cell strong {
+    display: block;
+    font-size: 13px;
+    color: var(--white);
+}
+
+.customer-info-cell span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.spent-amount {
+    color: #10b981;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.orders-badge {
+    display: inline-block;
+    padding: 3px 9px;
+    background: rgba(45, 140, 255, 0.15);
+    color: var(--blue-bright);
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.customer-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.customer-order-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--navy);
+    border-radius: 8px;
+    border: 1px solid var(--navy-light);
+}
+
+.customer-order-left strong {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--blue-bright);
+}
+
+.customer-order-left span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.customer-order-right {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.customer-order-right strong {
+    color: var(--white);
+    font-size: 13px;
+}
+
+.customer-order-right span {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.stat-box {
+    background: var(--navy-deep);
+    border: 1px solid var(--navy-light);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+
+.stat-box-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.stat-box-value {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--white);
+}
+
+.stat-box-value.green {
+    color: #10b981;
+}
+
+@media (max-width: 600px) {
+    .stat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

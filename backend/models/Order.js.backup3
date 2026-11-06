@@ -1,0 +1,65 @@
+const mongoose = require('mongoose');
+
+const orderSchema = new mongoose.Schema({
+  orderNumber: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true
+  },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  customerDetails: {
+    name: { type: String, required: true },
+    phone: { type: String, required: true },
+    email: String,
+    address: { type: String, required: true },
+    city: String,
+    state: String,
+    pincode: { type: String, required: true }
+  },
+  items: [{
+    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+    name: String,
+    quantity: { type: Number, required: true },
+    price: { type: Number, required: true }
+  }],
+  subtotal: { type: Number, required: true },
+  discount: { type: Number, default: 0 },
+  shipping: { type: Number, default: 0 },
+  total: { type: Number, required: true },
+  paymentStatus: {
+    type: String,
+    enum: ['Pending', 'Paid', 'Failed', 'Refunded'],
+    default: 'Pending'
+  },
+  orderStatus: {
+    type: String,
+    enum: ['Payment Pending', 'Confirmed', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'],
+    default: 'Payment Pending'
+  }
+}, { timestamps: true });
+
+/**
+ * Auto-generate orderNumber before saving
+ * Format: NOVA-YYYYMMDD-XXXXXX  (e.g. NOVA-20261106-A3F9K2)
+ * Collision-free via 6 random base36 chars + timestamp.
+ */
+orderSchema.pre('validate', function (next) {
+  if (!this.orderNumber) {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+
+    const rand = Math.random()
+      .toString(36)
+      .substring(2, 8)
+      .toUpperCase()
+      .padEnd(6, 'X');
+
+    this.orderNumber = `NOVA-${y}${m}${d}-${rand}`;
+  }
+  next();
+});
+
+module.exports = mongoose.model('Order', orderSchema);

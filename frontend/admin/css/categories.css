@@ -1,0 +1,59 @@
+/* ============================================
+   CATEGORIES MANAGEMENT
+   ============================================ */
+
+.category-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+}
+
+.category-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--navy-deep);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.category-thumb-placeholder {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--navy-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.category-info-cell strong {
+    display: block;
+    font-size: 13px;
+    color: var(--white);
+}
+
+.category-info-cell span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.product-count-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(45, 140, 255, 0.15);
+    color: var(--blue-bright);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#categoryImagePreview .preview-wrap {
+    display: inline-block;
+    position: relative;
+    margin-right: 8px;
+}

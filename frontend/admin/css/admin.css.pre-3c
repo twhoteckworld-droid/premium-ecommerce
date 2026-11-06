@@ -1,0 +1,265 @@
+/* ============================================
+   NOVASTORE ADMIN – PREMIUM BLUE THEME
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #071a35;
+    --navy-deep: #041124;
+    --navy-light: #0f2846;
+    --blue: #1769e0;
+    --blue-bright: #2d8cff;
+    --blue-glow: #4da3ff;
+    --white: #ffffff;
+    --text: #17243a;
+    --muted: #748096;
+    --border: #e8edf4;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --radius: 10px;
+}
+
+html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--navy-deep);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   LOGIN PAGE
+   ============================================ */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: radial-gradient(circle at 20% 20%, #0f2846, #041124 70%);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-page::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45, 140, 255, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--navy);
+    border: 1px solid var(--navy-light);
+    border-radius: 18px;
+    padding: 40px 32px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    position: relative;
+    z-index: 1;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-logo h1 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--white);
+}
+
+.login-logo h1 span {
+    color: var(--blue-bright);
+}
+
+.login-logo p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 6px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.login-form h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+    color: var(--white);
+    font-weight: 700;
+}
+
+.login-form .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    color: #a8b3c5;
+    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px 15px;
+    background: var(--navy-deep);
+    border: 1px solid var(--navy-light);
+    border-radius: var(--radius);
+    color: var(--white);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: 0.2s;
+}
+
+.form-group input:focus {
+    border-color: var(--blue-bright);
+    box-shadow: 0 0 0 3px rgba(45, 140, 255, 0.15);
+}
+
+.form-group input::placeholder {
+    color: #4a5a78;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(45, 140, 255, 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.login-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ff8b8b;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 18px;
+    display: none;
+}
+
+.login-error.show {
+    display: block;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 22px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* ============================================
+   DASHBOARD (placeholder for Phase 3C)
+   ============================================ */
+
+.dashboard-placeholder {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px;
+    text-align: center;
+}
+
+.dashboard-placeholder h1 {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--white);
+}
+
+.dashboard-placeholder p {
+    color: var(--muted);
+    margin-bottom: 24px;
+}
+
+.dashboard-placeholder .btn-logout {
+    padding: 12px 24px;
+    background: transparent;
+    color: var(--blue-bright);
+    border: 1px solid var(--blue-bright);
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.dashboard-placeholder .btn-logout:hover {
+    background: var(--blue-bright);
+    color: var(--white);
+}
+
+/* ============================================
+   LOADER
+   ============================================ */
+
+.btn-loader {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--white);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 30px 22px;
+    }
+    .login-logo h1 {
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,147 @@
+/* NOTIFICATIONS BELL + DROPDOWN */
+
+.notif-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #ef4444;
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 10px;
+    min-width: 16px;
+    text-align: center;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+    animation: notifPulse 2s infinite;
+}
+
+@keyframes notifPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.notif-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 360px;
+    max-height: 500px;
+    background: var(--navy);
+    border: 1px solid var(--navy-light);
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    z-index: 200;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.notif-dropdown.active {
+    display: flex;
+}
+
+.notif-dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--navy-light);
+    background: var(--navy-deep);
+}
+
+.notif-dropdown-header strong {
+    color: var(--white);
+    font-size: 14px;
+}
+
+.notif-dropdown-body {
+    overflow-y: auto;
+    max-height: 420px;
+}
+
+.notif-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(232, 237, 244, 0.05);
+    cursor: pointer;
+    transition: 0.15s;
+    position: relative;
+}
+
+.notif-item:hover {
+    background: rgba(45, 140, 255, 0.06);
+}
+
+.notif-item.unread {
+    background: rgba(45, 140, 255, 0.04);
+}
+
+.notif-item.unread::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--blue-bright);
+}
+
+.notif-icon-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.notif-icon-new_order { background: rgba(45, 140, 255, 0.15); color: #2d8cff; }
+.notif-icon-low_stock { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.notif-icon-out_of_stock { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.notif-icon-new_customer { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+.notif-icon-payment_failed { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.notif-icon-order_cancelled { background: rgba(107, 114, 128, 0.15); color: #9ca3af; }
+
+.notif-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notif-content strong {
+    display: block;
+    color: var(--white);
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.notif-content p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.notif-time {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.notif-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .notif-dropdown {
+        width: calc(100vw - 32px);
+        right: -8px;
+    }
+}

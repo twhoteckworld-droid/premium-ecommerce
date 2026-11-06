@@ -1,0 +1,28 @@
+const express = require('express');
+const router = express.Router();
+
+const {
+    createOrder,
+    getOrderById,
+    getOrders,
+    updateOrderStatus
+} = require('../controllers/orderController');
+
+const adminAuth = require('../middleware/adminAuth');
+
+// Create order (public)
+router.post('/', createOrder);
+
+// List all orders (admin only)
+router.get('/', adminAuth, getOrders);
+
+// Get single order (public with phone verify OR admin key)
+router.get('/:id', getOrderById);
+
+// Update status (admin only)
+router.patch('/:id/status', adminAuth, updateOrderStatus);
+
+// Cancel order (admin only)
+router.patch('/:id/cancel', adminAuth, cancelOrder);
+
+module.exports = router;
